@@ -23,8 +23,15 @@ class App extends Component {
   }
 
   _selectBook = event => {
+    var n = event.target.id;
+    if(n>39){
+      n = n-40;
+    } else {
+      n = n-1;
+    }
     this.setState({
-      book: event.target.id
+      book: event.target.id,
+      bookName: this.state.data[n].book_name
     });
   };
 
@@ -64,12 +71,7 @@ class App extends Component {
   _displayData = () => {
     const items = this.state.data.map(data => {
       return (
-        <button
-          className="book"
-          id={data.book_nr}
-          key={data.book_nr}
-          onClick={this._selectBook}
-        >
+        <button className="book" id={data.book_nr} key={data.book_nr} onClick={this._selectBook}>
           {data.book_name}
         </button>
       );
@@ -104,17 +106,23 @@ class App extends Component {
     var venum = formData.get("verseEnd");
 
     var maxChapter = Object.keys(this.state.data[bnum].book).length;
-    if (cnum <= 0 || cnum > maxChapter) {
+    if (cnum <= 0) {
       alert("올바르지 않은 입력입니다.");
       return;
     }
     var maxVerse = Object.keys(this.state.data[bnum].book[cnum].chapter).length;
-    if (vsnum <= 0 || vsnum > venum || venum > maxVerse) {
+    if (vsnum <= 0 || vsnum > venum) {
       alert("올바르지 않은 입력입니다.");
       return;
     }
 
     var temp = [];
+    if(cnum > maxChapter){
+      vsnum = maxChapter;
+    }
+    if (venum > maxVerse) {
+      venum = maxVerse;
+    }
     for (var i = vsnum; i <= venum; ++i) {
       temp.push(this.state.data[bnum].book[cnum].chapter[i]);
     }
@@ -166,6 +174,7 @@ class App extends Component {
         <div className="verseDisplay">
           <br />
           {this._words()}
+          {this.state.view ? (<p id="info">{this.state.bookName} {this.state.chapter}:{this.state.verseS}~{this.state.verseE} KRV</p>) : null}
           <br/><br/>
         </div>
         <p>성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로 알려주시기 바랍니다.</p>
