@@ -170,7 +170,9 @@ class App extends Component {
         <div className="verseDisplay">
           <br />
           {this._words()}
+          <br/><br/>
         </div>
+        <p>성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로 알려주시기 바랍니다.</p>
       </div>
     );
   }
