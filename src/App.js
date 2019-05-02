@@ -19,7 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    document.title = "바이블 검색 페이지"
+    document.title = "바이블 검색 페이지";
   }
 
   _selectBook = event => {
@@ -64,7 +64,12 @@ class App extends Component {
   _displayData = () => {
     const items = this.state.data.map(data => {
       return (
-        <button className="book" id={data.book_nr} key={data.book_nr} onClick={this._selectBook}>
+        <button
+          className="book"
+          id={data.book_nr}
+          key={data.book_nr}
+          onClick={this._selectBook}
+        >
           {data.book_name}
         </button>
       );
@@ -98,10 +103,13 @@ class App extends Component {
     var vsnum = formData.get("verseStart");
     var venum = formData.get("verseEnd");
 
-    var maxChpater = Object.keys(this.state.data[bnum].book).length;
+    var maxChapter = Object.keys(this.state.data[bnum].book).length;
+    if (cnum <= 0 || cnum > maxChapter) {
+      alert("올바르지 않은 입력입니다.");
+      return;
+    }
     var maxVerse = Object.keys(this.state.data[bnum].book[cnum].chapter).length;
-
-    if(vsnum<0 || vsnum>venum || venum>maxVerse){
+    if (vsnum <= 0 || vsnum > venum || venum > maxVerse) {
       alert("올바르지 않은 입력입니다.");
       return;
     }
