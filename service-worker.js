@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.0/workbox-sw.js");
 
 importScripts(
-  "/bibla_app/precache-manifest.8e1457da68166e0a652b7e0755c7fdd3.js"
+  "/bibla_app/precache-manifest.e7cc3d1979414ac6f4433b7a166ec559.js"
 );
 
 self.addEventListener('message', (event) => {
