@@ -162,11 +162,7 @@ class App extends Component {
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
         </div>
-        {this.state.view ? (
-          <button id="copy" onClick={this._copyData}>
-            전체복사
-          </button>
-        ) : null}
+        {this.state.view ? (<button id="copy" onClick={this._copyData}>전체복사</button>) : null}
         <div className="verseDisplay">
           <br />
           {this._words()}
