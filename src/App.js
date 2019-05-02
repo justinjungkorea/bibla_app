@@ -18,7 +18,9 @@ class App extends Component {
     this._result = this._result.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    document.title = "바이블 검색 페이지"
+  }
 
   _selectBook = event => {
     this.setState({
