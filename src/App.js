@@ -24,10 +24,10 @@ class App extends Component {
 
   _selectBook = event => {
     var n = event.target.id;
-    if(n>39){
-      n = n-40;
+    if (n > 39) {
+      n = n - 40;
     } else {
-      n = n-1;
+      n = n - 1;
     }
     this.setState({
       book: event.target.id,
@@ -71,7 +71,12 @@ class App extends Component {
   _displayData = () => {
     const items = this.state.data.map(data => {
       return (
-        <button className="book" id={data.book_nr} key={data.book_nr} onClick={this._selectBook}>
+        <button
+          className="book"
+          id={data.book_nr}
+          key={data.book_nr}
+          onClick={this._selectBook}
+        >
           {data.book_name}
         </button>
       );
@@ -117,7 +122,7 @@ class App extends Component {
     }
 
     var temp = [];
-    if(cnum > maxChapter){
+    if (cnum > maxChapter) {
       vsnum = maxChapter;
     }
     if (venum > maxVerse) {
@@ -170,14 +175,27 @@ class App extends Component {
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
         </div>
-        {this.state.view ? (<button id="copy" onClick={this._copyData}>전체복사</button>) : null}
+        {this.state.view ? (
+          <button id="copy" onClick={this._copyData}>
+            전체복사
+          </button>
+        ) : null}
         <div className="verseDisplay">
           <br />
           {this._words()}
-          {this.state.view ? (<p id="info">{this.state.bookName} {this.state.chapter}:{this.state.verseS}~{this.state.verseE} KRV</p>) : null}
-          <br/><br/>
+          {this.state.view ? (
+            <p id="info">
+              {this.state.bookName} {this.state.chapter}:{this.state.verseS}~
+              {this.state.verseE} KRV
+            </p>
+          ) : null}
+          <br />
+          <br />
         </div>
-        <p>성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로 알려주시기 바랍니다.</p>
+        <p>
+          성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은
+          jungdw0624@gmail.com으로 알려주시기 바랍니다.
+        </p>
       </div>
     );
   }
