@@ -92,13 +92,13 @@ class App extends Component {
       <form onSubmit={this._result}>
         <label>
           <label id="bookinfo">{this.state.bookName}</label>
-          <input type="number" name="chapterNum" required="required" />장
+          <input type="number" pattern="\d*" name="chapterNum" required="required" />장
         </label>
         <label>
-          <input type="number" name="verseStart" required="required" />절~ 
+          <input type="number" pattern="\d*" name="verseStart" required="required" />절~ 
         </label>
         <label>
-          <input type="number" name="verseEnd" required="required" />절
+          <input type="number" pattern="\d*" name="verseEnd" required="required" />절
         </label>
         <input type="submit" value="보기" />
       </form>
