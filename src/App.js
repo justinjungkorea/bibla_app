@@ -123,6 +123,10 @@ class App extends Component {
       alert("올바르지 않은 입력입니다.1");
       return;
     }
+    //입력한 장이 해당 성경의 장수보다 높으면 마지막 장을 출력하도록 갱신
+     if (cnum > maxChapter) {
+       cnum = maxChapter;
+     }
 
     //입력한 장이 몇 절로 이루어졌는지 정보 가져오기
     let maxVerse = Number(Object.keys(ddata.book[cnum].chapter).length);
@@ -135,8 +139,7 @@ class App extends Component {
 
     let loaded = [];
 
-    //입력한 장(절)이 해당 성경(장)의 장(절)수보다 높을수 마지막 장(절)을 출력하도록 갱신
-    if (cnum > maxChapter) {cnum = maxChapter;}
+    //입력한 절이 해당 장의 절수보다 높으면 마지막 절을 출력하도록 갱신
     if (venum > maxVerse) {venum = maxVerse;}
 
     while (vsnum <= venum) {
