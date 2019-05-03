@@ -91,13 +91,14 @@ class App extends Component {
     return (
       <form onSubmit={this._result}>
         <label>
+          <label id="bookinfo">{this.state.bookName}</label>
           <input type="number" name="chapterNum" required="required" />장
         </label>
         <label>
-          <input type="number" name="verseStart" required="required" />절 부터
+          <input type="number" name="verseStart" required="required" />절~ 
         </label>
         <label>
-          <input type="number" name="verseEnd" required="required" />절 까지
+          <input type="number" name="verseEnd" required="required" />절
         </label>
         <input type="submit" value="보기" />
       </form>
@@ -120,7 +121,7 @@ class App extends Component {
 
     //입력이 올바르지 않을 시 alert출력 및 값 재설정
     if (cnum <= 0) {
-      alert("올바르지 않은 입력입니다.1");
+      alert("올바르지 않은 입력입니다.");
       return;
     }
     //입력한 장이 해당 성경의 장수보다 높으면 마지막 장을 출력하도록 갱신
@@ -133,7 +134,7 @@ class App extends Component {
 
     //입력이 올바르지 않을시 alert출력 및 값 재설정
     if (vsnum <= 0 || vsnum > venum) {
-      alert("올바르지 않은 입력입니다.2");
+      alert("올바르지 않은 입력입니다.");
       return;
     }
 
@@ -182,19 +183,33 @@ class App extends Component {
   render() {
     return (
       <div className="AppDisplay">
-        <button id="ot" onClick={this._loadingOT}>구약</button>
-        <button id="nt" onClick={this._loagingNT}>신약</button>
+        <button id="ot" onClick={this._loadingOT}>
+          구약
+        </button>
+        <button id="nt" onClick={this._loagingNT}>
+          신약
+        </button>
         <div className="books">
-          {this.state.data.length !== 0 ? this._displayData() : null}
-          {this.state.book!==0? this._chapterVerse() : null}
+          {this.state.data.length !== 0 ? this._displayData() : null}     
+          {this.state.book !== 0 ? this._chapterVerse() : null}
+          {this.state.book !== 0 ? (<p id="lastinfo">해당 성경의 장 혹은 절 보다 큰 수 입력시 마지막 장 혹은 마지막 절까지 출력</p>) : null}
         </div>
-        {this.state.view ? (<button id="copy" onClick={this._copyData}>전체복사</button>) : null}
+        {this.state.view ? (
+          <button id="copy" onClick={this._copyData}>
+            전체복사
+          </button>
+        ) : null}
         <div className="verseDisplay">
           <br />
           {this._words()}
-          {this.state.view ? 
-          (<p id="info">{this.state.bookName} {this.state.chapter}:{this.state.verseS}~{this.state.verseE} KRV</p>) : null}
-          <br /><br />
+          {this.state.view ? (
+            <p id="info">
+              {this.state.bookName} {this.state.chapter}:{this.state.verseS}
+              ~{this.state.verseE} KRV
+            </p>
+          ) : null}
+          <br />
+          <br />
         </div>
         <p>
           성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은
