@@ -121,7 +121,6 @@ class App extends Component {
     //입력이 올바르지 않을 시 alert출력 및 값 재설정
     if (cnum <= 0) {
       alert("올바르지 않은 입력입니다.1");
-      this._resetData();
       return;
     }
 
@@ -131,7 +130,6 @@ class App extends Component {
     //입력이 올바르지 않을시 alert출력 및 값 재설정
     if (vsnum <= 0 || vsnum > venum) {
       alert("올바르지 않은 입력입니다.2");
-      this._resetData();
       return;
     }
 
@@ -155,18 +153,6 @@ class App extends Component {
     });
 
   };
-
-  //앱 초기화
-  _resetData = () => {
-    this.setState({
-      data: this.state.data,
-      verseData:[],
-      chapter:0,
-      verseS:0,
-      verseE:0,
-      view:false
-    });
-  }
 
   //state에 있는 data div tag에 리턴
   _words = () => {
