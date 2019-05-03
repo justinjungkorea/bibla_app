@@ -133,7 +133,7 @@ class App extends Component {
     let maxVerse = Number(Object.keys(ddata.book[cnum].chapter).length);
 
     //입력이 올바르지 않을시 alert출력 및 값 재설정
-    if (vsnum <= 0 || vsnum > venum) {
+    if (vsnum <= 0 || vsnum > venum ) {
       alert("올바르지 않은 입력입니다.");
       return;
     }
@@ -141,16 +141,22 @@ class App extends Component {
     let loaded = [];
 
     //입력한 절이 해당 장의 절수보다 높으면 마지막 절을 출력하도록 갱신
-    if (venum > maxVerse) {venum = maxVerse;}
+    if (venum > maxVerse) {
+      venum = maxVerse;
+    }
+    if(vsnum > maxVerse){
+      vsnum = maxVerse;
+    }
 
-    while (vsnum <= venum) {
-      loaded.push(ddata.book[cnum].chapter[vsnum]);
-      vsnum++;
+    let i = vsnum;
+    while (i <= venum) {
+      loaded.push(ddata.book[cnum].chapter[i]);
+      i++;
     }
     //bible.json파일에 있는 data에서 필요한 구절들을 배열에 넣고 state에 갱신
     this.setState({
       chapter: cnum,
-      verseS: Number(formData.get("verseStart")),
+      verseS: vsnum,
       verseE: venum,
       verseData: loaded,
       view: true
@@ -190,9 +196,14 @@ class App extends Component {
           신약
         </button>
         <div className="books">
-          {this.state.data.length !== 0 ? this._displayData() : null}     
+          {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
-          {this.state.book !== 0 ? (<p id="lastinfo">해당 성경의 장 혹은 절 보다 큰 수 입력시 마지막 장 혹은 마지막 절까지 출력</p>) : null}
+          {this.state.book !== 0 ? (
+            <p id="lastinfo">
+              해당 성경의 장 혹은 절 보다 큰 수 입력시 마지막 장 혹은 마지막
+              절까지 출력
+            </p>
+          ) : null}
         </div>
         {this.state.view ? (
           <button id="copy" onClick={this._copyData}>
@@ -202,11 +213,14 @@ class App extends Component {
         <div className="verseDisplay">
           <br />
           {this._words()}
-          {this.state.view ? (
+          {this.state.view && this.state.verseS !== this.state.verseE ? (
             <p id="info">
               {this.state.bookName} {this.state.chapter}:{this.state.verseS}
               ~{this.state.verseE} KRV
             </p>
+          ) : null}
+          {this.state.view && this.state.verseS === this.state.verseE ? (
+            <p id="info">{this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV</p>
           ) : null}
           <br />
           <br />
