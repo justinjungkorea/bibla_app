@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/bibla_app/static/css/main.9a803716.chunk.css",
-    "main.js": "/bibla_app/static/js/main.74a6affe.chunk.js",
-    "main.js.map": "/bibla_app/static/js/main.74a6affe.chunk.js.map",
+    "main.js": "/bibla_app/static/js/main.57e28b77.chunk.js",
+    "main.js.map": "/bibla_app/static/js/main.57e28b77.chunk.js.map",
     "runtime~main.js": "/bibla_app/static/js/runtime~main.ece8b4a1.js",
     "runtime~main.js.map": "/bibla_app/static/js/runtime~main.ece8b4a1.js.map",
     "static/js/2.eddfb069.chunk.js": "/bibla_app/static/js/2.eddfb069.chunk.js",
     "static/js/2.eddfb069.chunk.js.map": "/bibla_app/static/js/2.eddfb069.chunk.js.map",
     "index.html": "/bibla_app/index.html",
-    "precache-manifest.4704995810eb2adcd1892d59dadecdaf.js": "/bibla_app/precache-manifest.4704995810eb2adcd1892d59dadecdaf.js",
+    "precache-manifest.a01212094729f536acacea5859cf2611.js": "/bibla_app/precache-manifest.a01212094729f536acacea5859cf2611.js",
     "service-worker.js": "/bibla_app/service-worker.js",
     "static/css/main.9a803716.chunk.css.map": "/bibla_app/static/css/main.9a803716.chunk.css.map"
   }
