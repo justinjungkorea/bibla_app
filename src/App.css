@@ -45,7 +45,7 @@
 input[type="number"] {
   width: 35px;
   height: 20px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -90,8 +90,15 @@ input[type="submit"] {
   text-shadow: none;
 }
 
-#lastinfo,#bookinfo {
+#lastinfo {
   font-size:8pt;
+  margin-left:5px;
+  margin-right: 3px;
+  font-weight: bold;
+}
+
+#bookinfo {
+  font-size:10pt;
   margin-left:5px;
   margin-right: 3px;
   font-weight: bold;
@@ -100,4 +107,17 @@ input[type="submit"] {
 form{
   margin-top: 15px;
   margin-bottom: 15px
+}
+
+.verseDisplay{
+  margin-left: 10px;
+  margin-right:10px;
+}
+
+.AppDisplay{
+  margin-top:20px;
+}
+
+#notice{
+  margin-left: 10px;
 }

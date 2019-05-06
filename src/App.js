@@ -88,33 +88,32 @@ class App extends Component {
 
   //성경을 선택하면 장, 절 입력 화면 출력
   _chapterVerse = () => {
-    return (
-      <form onSubmit={this._result}>
+    return <form onSubmit={this._result}>
         <label>
           <label id="bookinfo">{this.state.bookName}</label>
-          <input type="number" pattern="\d*" name="chapterNum" required="required" />장
+          <input type="number" pattern="\d*" name="chapterNum" required="required" content="user-scalable=no" />장
         </label>
         <label>
-          <input type="number" pattern="\d*" name="verseStart" required="required" />절~ 
+          <input type="number" pattern="\d*" name="verseStart" content="user-scalable=no" />절~
         </label>
         <label>
-          <input type="number" pattern="\d*" name="verseEnd" required="required" />절
+          <input type="number" pattern="\d*" name="verseEnd" content="user-scalable=no" />절
         </label>
         <input type="submit" value="보기" />
-      </form>
-    );
+      </form>;
   };
 
   _result = (event) => {
     event.preventDefault();
     const ddata = this.state.bookData;
+
     //입력 form에서 입력 데이터 가져오기
     let formData = new FormData(event.target);
 
     //입력화면에 있는 장, 시작 절, 끝 절 값 가져오기
     let cnum = Number(formData.get("chapterNum"));
-    let vsnum = Number(formData.get("verseStart"));
-    let venum = Number(formData.get("verseEnd"));
+    let vsnum = (Number(formData.get("verseStart")) > 0 ? Number(formData.get("verseStart")):1);
+    let venum = (Number(formData.get("verseEnd")) > 0 ? Number(formData.get("verseEnd")):999);
 
     //입력한 성경이 몇 장으로 이루어져있는지 정보 가져오기
     let maxChapter = Number(Object.keys(ddata.book).length);
@@ -187,8 +186,7 @@ class App extends Component {
   };
 
   render() {
-    return (
-      <div className="AppDisplay">
+    return <div className="AppDisplay" align="center" >
         <button id="ot" onClick={this._loadingOT}>
           구약
         </button>
@@ -198,39 +196,31 @@ class App extends Component {
         <div className="books">
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
-          {this.state.book !== 0 ? (
-            <p id="lastinfo">
-              해당 성경의 장 혹은 절 보다 큰 수 입력시 마지막 장 혹은 마지막
-              절까지 출력
-            </p>
-          ) : null}
+          {this.state.book !== 0 ? <p id="lastinfo" align="left">
+                해당 성경의 장 혹은 절 보다 큰 수 입력시 마지막 장 혹은 마지막 절 출력
+              </p> : null}
         </div>
-        {this.state.view ? (
-          <button id="copy" onClick={this._copyData}>
-            전체복사
-          </button>
-        ) : null}
-        <div className="verseDisplay">
+        {this.state.view ? <button id="copy" onClick={this._copyData}>
+              전체복사
+            </button> : null}
+        <div className="verseDisplay" align="left">
           <br />
           {this._words()}
-          {this.state.view && this.state.verseS !== this.state.verseE ? (
-            <p id="info">
-              {this.state.bookName} {this.state.chapter}:{this.state.verseS}
-              ~{this.state.verseE} KRV
-            </p>
-          ) : null}
-          {this.state.view && this.state.verseS === this.state.verseE ? (
-            <p id="info">{this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV</p>
-          ) : null}
+          {this.state.view && this.state.verseS !== this.state.verseE ? <p id="info">
+                {this.state.bookName} {this.state.chapter}:{this.state.verseS}
+                ~{this.state.verseE} KRV
+              </p> : null}
+          {this.state.view && this.state.verseS === this.state.verseE ? <p id="info">
+                {this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV
+              </p> : null}
           <br />
           <br />
         </div>
-        <p>
-          성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은
-          jungdw0624@gmail.com으로 알려주시기 바랍니다.
+        <p align="left" id="notice">
+          성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로
+          알려주시기 바랍니다.
         </p>
-      </div>
-    );
+      </div>;
   }
 }
 
