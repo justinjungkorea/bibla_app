@@ -118,11 +118,6 @@ class App extends Component {
     //입력한 성경이 몇 장으로 이루어져있는지 정보 가져오기
     let maxChapter = Number(Object.keys(ddata.book).length);
 
-    //입력이 올바르지 않을 시 alert출력 및 값 재설정
-    if (cnum <= 0) {
-      alert("올바르지 않은 입력입니다.");
-      return;
-    }
     //입력한 장이 해당 성경의 장수보다 높으면 마지막 장을 출력하도록 갱신
      if (cnum > maxChapter) {
        cnum = maxChapter;
@@ -165,11 +160,18 @@ class App extends Component {
 
   //state에 있는 data div tag에 리턴
   _words = () => {
-    const items = this.state.verseData.map(tempV => {
-      return (
-        <div key={tempV.verse_nr}>{tempV.verse_nr}. {tempV.verse}</div>
-      );
+    let items = null;
+    if(this.state.verseData.length === 1){
+      items = this.state.verseData.map(tempV => {
+        return (<div key={tempV.verse_nr}>{tempV.verse}</div>);
+      })
+    }
+    else{
+      items = this.state.verseData.map(tempV => {
+      return (<div key={tempV.verse_nr}>{tempV.verse_nr}. {tempV.verse}</div>);
     });
+    }
+    
     return items;
   };
 
