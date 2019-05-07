@@ -91,13 +91,13 @@ class App extends Component {
     return <form onSubmit={this._result}>
         <label>
           <label id="bookinfo">{this.state.bookName}</label>
-          <input type="number" pattern="\d*" name="chapterNum" required="required" content="user-scalable=no" />장
+          <input type="number" pattern="\d*" name="chapterNum" id="chapterNum" required="required" content="user-scalable=no" />장
         </label>
         <label>
-          <input type="number" pattern="\d*" name="verseStart" content="user-scalable=no" />절~
+          <input type="number" pattern="\d*" name="verseStart" id="verseStart" content="user-scalable=no" />절~
         </label>
         <label>
-          <input type="number" pattern="\d*" name="verseEnd" content="user-scalable=no" />절
+          <input type="number" pattern="\d*" name="verseEnd" id="verseEnd" content="user-scalable=no" />절
         </label>
         <input type="submit" value="보기" />
       </form>;
@@ -117,13 +117,14 @@ class App extends Component {
 
     //절을 입력하지 않았을 시 장 전체 출력
     if (Number(formData.get("verseStart"))===0 && Number(formData.get("verseEnd"))===0) {
-      console.log("entire chater");
         vsnum = 1;
+        document.getElementById("verseStart").value = 1;
         venum = 999;
     } 
     //시작 절 부분만 입력시 해당 구절만 출력
     else if (Number(formData.get("verseStart") > 0 && Number(formData.get("verseEnd")) === 0)) {
         venum = vsnum;
+        document.getElementById("verseEnd").value = vsnum;
     }
 
     //입력이 올바르지 않을시 alert출력 및 값 재설정
@@ -138,6 +139,7 @@ class App extends Component {
     //입력한 장이 해당 성경의 장수보다 높으면 마지막 장을 출력하도록 갱신
      if (cnum > maxChapter) {
        cnum = maxChapter;
+       document.getElementById("chapterNum").value = maxChapter;
      }
 
     //입력한 장이 몇 절로 이루어졌는지 정보 가져오기
@@ -154,9 +156,11 @@ class App extends Component {
     //입력한 절이 해당 장의 절수보다 높으면 마지막 절을 출력하도록 갱신
     if (venum > maxVerse) {
       venum = maxVerse;
+      document.getElementById("verseEnd").value = maxVerse;
     }
     if(vsnum > maxVerse){
       vsnum = maxVerse;
+      document.getElementById("verseStart").value = maxVerse;
     }
 
     let i = vsnum;
@@ -216,7 +220,8 @@ class App extends Component {
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
           {this.state.book !== 0 ? <p id="lastinfo" align="left">
-                해당 성경의 장 혹은 절 보다 큰 수 입력시 마지막 장 혹은 마지막 절 출력
+                '장'만 입력시 해당 장 전체출력, 시작 절 만 입력시 한 구절만 출력<br/>
+                해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력<br/>예) 창세기 경우 50장 이므로 50보다 큰 수 입력시 50장이 입력됨.
               </p> : null}
         </div>
         {this.state.view ? <button id="copy" onClick={this._copyData}>
