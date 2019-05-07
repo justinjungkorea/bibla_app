@@ -112,9 +112,26 @@ class App extends Component {
 
     //입력화면에 있는 장, 시작 절, 끝 절 값 가져오기
     let cnum = Number(formData.get("chapterNum"));
-    let vsnum = (Number(formData.get("verseStart")) > 0 ? Number(formData.get("verseStart")):1);
-    let venum = (Number(formData.get("verseEnd")) > 0 ? Number(formData.get("verseEnd")):999);
+    let vsnum = Number(formData.get("verseStart"));
+    let venum = Number(formData.get("verseEnd"));
 
+    //절을 입력하지 않았을 시 장 전체 출력
+    if (Number(formData.get("verseStart"))===0 && Number(formData.get("verseEnd"))===0) {
+      console.log("entire chater");
+        vsnum = 1;
+        venum = 999;
+    } 
+    //시작 절 부분만 입력시 해당 구절만 출력
+    else if (Number(formData.get("verseStart") > 0 && Number(formData.get("verseEnd")) === 0)) {
+        venum = vsnum;
+    }
+
+    //입력이 올바르지 않을시 alert출력 및 값 재설정
+    if (cnum < 0 ) {
+      alert("올바르지 않은 입력입니다.");
+      return;
+    }
+    
     //입력한 성경이 몇 장으로 이루어져있는지 정보 가져오기
     let maxChapter = Number(Object.keys(ddata.book).length);
 
