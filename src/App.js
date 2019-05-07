@@ -220,7 +220,7 @@ class App extends Component {
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
           {this.state.book !== 0 ? <p id="lastinfo" align="left">
-                '장'만 입력시 해당 장 전체출력, 시작 절 만 입력시 한 구절만 출력<br/>
+                '장'만 입력시 해당 장 전체출력, 시작 '절'만 입력시 해당 구절만 출력<br/>
                 해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력<br/>예) 창세기 경우 50장 이므로 50보다 큰 수 입력시 50장이 입력됨.
               </p> : null}
         </div>
