@@ -103,6 +103,7 @@ class App extends Component {
       </form>;
   };
 
+  //입력 후 결과 화면 출력 
   _result = (event) => {
     event.preventDefault();
     const ddata = this.state.bookData;
@@ -179,7 +180,7 @@ class App extends Component {
 
   };
 
-  //state에 있는 data div tag에 리턴
+  //state에 있는 data를 div tag에 리턴
   _words = () => {
     let items = null;
     if(this.state.verseData.length === 1){
@@ -209,7 +210,7 @@ class App extends Component {
   };
 
   render() {
-    return <div className="AppDisplay" align="center" >
+    return <div className="AppDisplay" align="center">
         <button id="ot" onClick={this._loadingOT}>
           구약
         </button>
@@ -220,8 +221,7 @@ class App extends Component {
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
           {this.state.book !== 0 ? <p id="lastinfo" align="left">
-                '장'만 입력시 해당 장 전체출력, 시작 '절'만 입력시 해당 구절만 출력<br/>
-                해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력<br/>예) 창세기 경우 50장 이므로 50보다 큰 수 입력시 50장이 입력됨.
+                해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력<br />예) 창세기 경우 50장 이므로 50보다 큰 수 입력시 50장이 입력됨.
               </p> : null}
         </div>
         {this.state.view ? <button id="copy" onClick={this._copyData}>
@@ -241,8 +241,7 @@ class App extends Component {
           <br />
         </div>
         <p align="left" id="notice">
-          성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로
-          알려주시기 바랍니다.
+          성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로 알려주시기 바랍니다.
         </p>
       </div>;
   }
