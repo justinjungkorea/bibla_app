@@ -237,8 +237,6 @@ class App extends Component {
           {this.state.view && this.state.verseS === this.state.verseE ? <p id="info">
                 {this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV
               </p> : null}
-          <br />
-          <br />
         </div>
         <p align="left" id="notice">
           성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로 알려주시기 바랍니다.
