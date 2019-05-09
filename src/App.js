@@ -67,10 +67,17 @@ class App extends Component {
     } else {
       n = n - 1;
     }
+
+    if(this.state.view){
+      this._clearInput();
+    }
+
     this.setState({
       book: event.target.id,
       bookName: this.state.data[n].book_name,
-      bookData:this.state.data[n]
+      bookData:this.state.data[n],
+      view:false,
+      verseData:[]
     });
   };
 
@@ -209,6 +216,12 @@ class App extends Component {
     alert("클립보드에 복사 되었습니다!");
   };
 
+  _clearInput = () =>{
+    document.getElementById("chapterNum").value = null;
+    document.getElementById("verseStart").value = null;
+    document.getElementById("verseEnd").value = null;
+  }
+
   render() {
     return <div className="AppDisplay" align="center">
         <button id="ot" onClick={this._loadingOT}>
@@ -224,11 +237,16 @@ class App extends Component {
                 해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력<br />예) 창세기 경우 50장 이므로 50보다 큰 수 입력시 50장이 입력됨.
               </p> : null}
         </div>
-        {this.state.view ? <button id="copy" onClick={this._copyData}>
+        {this.state.view ? 
+          <div>
+          <button id="copy" onClick={this._copyData}>
               전체복사
-            </button> : null}
+          </button>
+          <button id="clear" onClick={this._clearInput}>초기화</button>
+          </div> 
+        : null}
+      <br />
         <div className="verseDisplay" align="left">
-          <br />
           {this._words()}
           {this.state.view && this.state.verseS !== this.state.verseE ? <p id="info">
                 {this.state.bookName} {this.state.chapter}:{this.state.verseS}
