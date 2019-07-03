@@ -104,9 +104,10 @@ class App extends Component {
 
   //성경을 선택하면 장, 절 입력 화면 출력
   _chapterVerse = () => {
-    return <form onSubmit={this._result}>
+    return <div>
+      <span id="bookinfo">{this.state.bookName}</span><br />
+      <form onSubmit={this._result}>
         <label>
-          <label id="bookinfo">{this.state.bookName}</label>
           <input type="number" pattern="\d*" name="chapterNum" id="chapterNum" required="required" content="user-scalable=no" />장
         </label>
         <label>
@@ -120,7 +121,8 @@ class App extends Component {
           <option value="gae" >개역개정</option>
         </select>
         <input type="submit" value="보기" />
-      </form>;
+      </form>
+    </div>;
   };
 
   //입력 후 결과 화면 출력 
