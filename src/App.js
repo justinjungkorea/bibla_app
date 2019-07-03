@@ -194,7 +194,7 @@ class App extends Component {
     }
     let i = vsnum;
     while (i <= venum) {
-      loaded.push(Object.values(ar)[i-1]);
+      loaded.push({"verseNum": i, "verse":Object.values(ar)[i-1]});
       i++;
     }
     //bible.json파일에 있는 data에서 필요한 구절들을 배열에 넣고 state에 갱신
@@ -213,12 +213,12 @@ class App extends Component {
     let items = null;
     if(this.state.verseData.length === 1){
       items = this.state.verseData.map(tempV => {
-        return (<div key={this.state.verseData.indexOf(tempV) + 1}>{tempV}</div>);
+        return (<div key={tempV.verseNum}>{tempV.verse}</div>);
       })
     }
     else{
       items = this.state.verseData.map(tempV => {
-        return (<div key={this.state.verseData.indexOf(tempV) + 1}>{this.state.verseData.indexOf(tempV) + 1}. {tempV}</div>);
+        return (<div key={tempV.verseNum}>{tempV.verseNum}.{tempV.verse}</div>);
     });
     }
     
@@ -277,9 +277,6 @@ class App extends Component {
                 {this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV
               </p> : null}
         </div>
-        <p align="left" id="notice">
-          성경본문은 getbible.net에서 개역한글판을 가져왔으며 오류 및 수정은 jungdw0624@gmail.com으로 알려주시기 바랍니다.
-        </p>
       </div>;
   }
 }
