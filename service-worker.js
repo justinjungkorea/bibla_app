@@ -11,10 +11,10 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.0/workbox-sw.js");
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/bibla_app/precache-manifest.32de21ec01f462533cfcc31d5a96d24a.js"
+  "/bibla_app/precache-manifest.83e4158250220e63e259fbfc4a7401fc.js"
 );
 
 self.addEventListener('message', (event) => {
