@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import bible from "./bible.json";
+import bible from "./ko_ko.json";
+import bible2 from "./ko_ko_GAE.json";
 import "./App.css";
 
 class App extends Component {
   state = {
     data: [],
+    data2: [],
     book: 0,
     chapter: 0,
     verseS: 0,
     verseE: 0,
     view: false,
     bookData: [],
+    bookData2: [],
     verseData: []
   };
 
@@ -26,12 +29,14 @@ class App extends Component {
   //구약 성경 불러와서 state data 갱신
   _loadingOT = async () => {
     let temp = [];
-    for (let i = 1; i <= 39; ++i) {
-      temp.push(bible[0].version[i]);
+    let temp2 = [];
+    for (let i = 0; i < 39; ++i) {
+      temp.push(bible[i]);
+      temp2.push(bible2[i]);
     }
-
     this.setState({
       data: temp,
+      data2:temp2,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -45,11 +50,14 @@ class App extends Component {
   //신약 성경 불러와서 state data 갱신
   _loagingNT = async () => {
     let temp = [];
-    for (let i = 40; i <= 66; ++i) {
-      temp.push(bible[0].version[i]);
+    let temp2 = [];
+    for (let i = 39; i < 66; ++i) {
+      temp.push(bible[i]);
+      temp2.push(bible2[i]);
     }
     this.setState({
       data: temp,
+      data2:temp2,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -71,11 +79,11 @@ class App extends Component {
     if(this.state.view){
       this._clearInput();
     }
-
     this.setState({
       book: event.target.id,
       bookName: this.state.data[n].book_name,
       bookData:this.state.data[n],
+      bookData2:this.state.data2[n],
       view:false,
       verseData:[]
     });
@@ -83,6 +91,7 @@ class App extends Component {
 
   //구약, 신약 선택 후 각 성경 리스트 버튼으로 리턴
   _displayData = () => {
+    
     const items = this.state.data.map(data => {
       return (
         <button className="book" id={data.book_nr} key={data.book_nr} onClick={this._selectBook}>
@@ -106,6 +115,10 @@ class App extends Component {
         <label>
           <input type="number" pattern="\d*" name="verseEnd" id="verseEnd" content="user-scalable=no" />절
         </label>
+        <select name="version">
+          <option value="han" defaultValue>개역한글</option>
+          <option value="gae" >개역개정</option>
+        </select>
         <input type="submit" value="보기" />
       </form>;
   };
@@ -113,10 +126,16 @@ class App extends Component {
   //입력 후 결과 화면 출력 
   _result = (event) => {
     event.preventDefault();
-    const ddata = this.state.bookData;
-
+    let ddata;
+    
     //입력 form에서 입력 데이터 가져오기
     let formData = new FormData(event.target);
+
+    if(formData.get("version") === "han"){
+      ddata = this.state.bookData;
+    } else {
+      ddata = this.state.bookData2;
+    }
 
     //입력화면에 있는 장, 시작 절, 끝 절 값 가져오기
     let cnum = Number(formData.get("chapterNum"));
@@ -142,8 +161,7 @@ class App extends Component {
     }
     
     //입력한 성경이 몇 장으로 이루어져있는지 정보 가져오기
-    let maxChapter = Number(Object.keys(ddata.book).length);
-
+    let maxChapter = Number(ddata.book.length);
     //입력한 장이 해당 성경의 장수보다 높으면 마지막 장을 출력하도록 갱신
      if (cnum > maxChapter) {
        cnum = maxChapter;
@@ -151,8 +169,10 @@ class App extends Component {
      }
 
     //입력한 장이 몇 절로 이루어졌는지 정보 가져오기
-    let maxVerse = Number(Object.keys(ddata.book[cnum].chapter).length);
-
+    //let maxVerse = Number(Object.keys(ddata.book[cnum-1]).length);
+    const obj = Object.values(ddata.book[cnum - 1]);
+    const ar = obj[0];
+    let maxVerse = Number(Object.keys(ar).length);
     //입력이 올바르지 않을시 alert출력 및 값 재설정
     if (vsnum <= 0 || vsnum > venum ) {
       alert("올바르지 않은 입력입니다.");
@@ -170,10 +190,9 @@ class App extends Component {
       vsnum = maxVerse;
       document.getElementById("verseStart").value = maxVerse;
     }
-
     let i = vsnum;
     while (i <= venum) {
-      loaded.push(ddata.book[cnum].chapter[i]);
+      loaded.push(Object.values(ar)[i-1]);
       i++;
     }
     //bible.json파일에 있는 data에서 필요한 구절들을 배열에 넣고 state에 갱신
@@ -192,12 +211,12 @@ class App extends Component {
     let items = null;
     if(this.state.verseData.length === 1){
       items = this.state.verseData.map(tempV => {
-        return (<div key={tempV.verse_nr}>{tempV.verse}</div>);
+        return (<div key={this.state.verseData.indexOf(tempV) + 1}>{tempV}</div>);
       })
     }
     else{
       items = this.state.verseData.map(tempV => {
-      return (<div key={tempV.verse_nr}>{tempV.verse_nr}. {tempV.verse}</div>);
+        return (<div key={this.state.verseData.indexOf(tempV) + 1}>{this.state.verseData.indexOf(tempV) + 1}. {tempV}</div>);
     });
     }
     
