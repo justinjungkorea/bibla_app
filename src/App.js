@@ -14,7 +14,8 @@ class App extends Component {
     view: false,
     bookData: [],
     bookData2: [],
-    verseData: []
+    verseData: [],
+    selection: []
   };
 
   constructor() {
@@ -116,7 +117,7 @@ class App extends Component {
         <label>
           <input type="number" pattern="\d*" name="verseEnd" id="verseEnd" content="user-scalable=no" />절
         </label>
-        <select name="version">
+        <select name="version" id="version">
           <option value="han" defaultValue>개역한글</option>
           <option value="gae" >개역개정</option>
         </select>
@@ -213,17 +214,26 @@ class App extends Component {
     let items = null;
     if(this.state.verseData.length === 1){
       items = this.state.verseData.map(tempV => {
-        return (<div key={tempV.verseNum}>{tempV.verse}</div>);
+        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{ color: 'black' }} onClick={() => {this._selectVerses(tempV.verseNum)}}>{tempV.verse}</p>);
       })
     }
     else{
       items = this.state.verseData.map(tempV => {
-        return (<div key={tempV.verseNum}>{tempV.verseNum}.{tempV.verse}</div>);
+        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{color: 'black'}} onClick={() => { this._selectVerses(tempV.verseNum) }}>{tempV.verseNum}.{tempV.verse}</p>);
     });
     }
     
     return items;
   };
+
+  _selectVerses = (verseNumber) => {
+    var selectedVerse = document.getElementById(verseNumber);
+    if (selectedVerse.style.color === 'black'){
+      selectedVerse.style.color = '#003399';
+    } else {
+      selectedVerse.style.color = 'black';
+    }
+  }
 
   //출력된 구절 클립보드에 복사하기
   _copyData = () => {
