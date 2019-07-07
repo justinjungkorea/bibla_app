@@ -214,12 +214,12 @@ class App extends Component {
     let items = null;
     if(this.state.verseData.length === 1){
       items = this.state.verseData.map(tempV => {
-        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{ color: 'black' }} onClick={() => {this._selectVerses(tempV.verseNum)}}>{tempV.verse}</p>);
+        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{ color: 'black', fontWeight: 400 }} onClick={() => {this._selectVerses(tempV.verseNum)}}>{tempV.verse}</p>);
       })
     }
     else{
       items = this.state.verseData.map(tempV => {
-        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{color: 'black'}} onClick={() => { this._selectVerses(tempV.verseNum) }}>{tempV.verseNum}.{tempV.verse}</p>);
+        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{ color: 'black', fontWeight: 400 }} onClick={() => { this._selectVerses(tempV.verseNum) }}>{tempV.verseNum}.{tempV.verse}</p>);
     });
     }
     
@@ -230,9 +230,23 @@ class App extends Component {
     var selectedVerse = document.getElementById(verseNumber);
     if (selectedVerse.style.color === 'black'){
       selectedVerse.style.color = '#003399';
+      selectedVerse.style.fontWeight = 500;
     } else {
       selectedVerse.style.color = 'black';
+      selectedVerse.style.fontWeight = 400;
     }
+  }
+
+  _selectedCopy = () => {
+    //var forCopy = [];
+    console.log("s: "+this.state.verseS);
+    console.log("3: " +this.state.verseE);
+    // for(var i=this.state.verseS;i<=this.state.verseE;++i){
+    //   var element = document.getElementById(i);
+    //   if(element.style.color !== 'black'){
+    //     forCopy.push(element.textContent);
+    //   }
+    // }
   }
 
   //출력된 구절 클립보드에 복사하기
@@ -270,9 +284,8 @@ class App extends Component {
         </div>
         {this.state.view ? 
           <div>
-          <button id="copy" onClick={this._copyData}>
-              전체복사
-          </button>
+          <button id="copy" onClick={this._copyData}>전체복사</button>
+          <button id="partedCopy" onClick={this._selectedCopy}>선택복사</button>
           <button id="clear" onClick={this._clearInput}>초기화</button>
           </div> 
         : null}

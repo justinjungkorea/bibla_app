@@ -72,7 +72,7 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-#copy, #clear {
+#copy, #clear, #partedCopy {
   background: #53c1ff;
   color: #fff;
   border: 1px solid #fff;
@@ -83,10 +83,10 @@ input[type="submit"] {
   text-shadow: none;
   width: 100px;
   height: 25px;
-  margin:10px;
+  margin:5px;
 }
 
-#copy:hover, #clear:hover {
+#copy:hover, #clear:hover, #partedCopy:hover {
   background: #016abc;
   color: #fff;
   border: 1px solid #eee;
