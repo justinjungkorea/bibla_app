@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import bible from "./ko_ko.json";
 import bible2 from "./ko_ko_GAE.json";
+import {CopyToClipboad} from 'react-copy-to-clipboard';
 import "./App.css";
 
 class App extends Component {
@@ -198,6 +199,7 @@ class App extends Component {
       loaded.push({"verseNum": i, "verse":Object.values(ar)[i-1]});
       i++;
     }
+
     //bible.json파일에 있는 data에서 필요한 구절들을 배열에 넣고 state에 갱신
     this.setState({
       chapter: cnum,
@@ -214,12 +216,14 @@ class App extends Component {
     let items = null;
     if(this.state.verseData.length === 1){
       items = this.state.verseData.map(tempV => {
-        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{ color: 'black', fontWeight: 400 }} onClick={() => {this._selectVerses(tempV.verseNum)}}>{tempV.verse}</p>);
+        var index = Number(tempV.verseNum) * 1000;
+        return (<p key={index} id={index} style={{ color: 'black'}} onClick={() => {this._selectVerses(index)}}>{tempV.verse}</p>);
       })
     }
     else{
       items = this.state.verseData.map(tempV => {
-        return (<p key={tempV.verseNum} id={tempV.verseNum} style={{ color: 'black', fontWeight: 400 }} onClick={() => { this._selectVerses(tempV.verseNum) }}>{tempV.verseNum}.{tempV.verse}</p>);
+        var index = Number(tempV.verseNum) * 1000;
+        return (<p key={index} id={index} style={{ color: 'black'}} onClick={() => { this._selectVerses(index) }}>{Number(tempV.verseNum)}.{tempV.verse}</p>);
     });
     }
     
@@ -230,24 +234,33 @@ class App extends Component {
     var selectedVerse = document.getElementById(verseNumber);
     if (selectedVerse.style.color === 'black'){
       selectedVerse.style.color = '#003399';
-      selectedVerse.style.fontWeight = 500;
     } else {
       selectedVerse.style.color = 'black';
-      selectedVerse.style.fontWeight = 400;
     }
   }
 
   _selectedCopy = () => {
-    //var forCopy = [];
-    console.log("s: "+this.state.verseS);
-    console.log("3: " +this.state.verseE);
-    // for(var i=this.state.verseS;i<=this.state.verseE;++i){
-    //   var element = document.getElementById(i);
-    //   if(element.style.color !== 'black'){
-    //     forCopy.push(element.textContent);
-    //   }
-    // }
+    var str = "";
+    for(var i=Number(this.state.verseS);i<=Number(this.state.verseE);++i){
+      var element = document.getElementById(i*1000);
+      if(element.style.color !== 'black'){
+        str = str + String(element.textContent) + "\n";
+      }
+    }
+    str = str + (this.state.bookName + " " + this.state.chapter + "장 KRV");
+    var el = document.createElement('textarea');
+    el.innerHTML = str;
+    el.style.pointerEvents = 'none';
+    el.style.opacity = 0;
+    document.body.appendChild(el);
+    window.getSelection().removeAllRanges();
+    var range = document.createRange();
+    range.selectNode(el);
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    alert("클립보드에 복사 되었습니다!");
   }
+  
 
   //출력된 구절 클립보드에 복사하기
   _copyData = () => {
@@ -265,6 +278,12 @@ class App extends Component {
     document.getElementById("chapterNum").value = null;
     document.getElementById("verseStart").value = null;
     document.getElementById("verseEnd").value = null;
+    for (var i = Number(this.state.verseS); i <= Number(this.state.verseE); ++i) {
+      var element = document.getElementById(i * 1000);
+      if (element.style.color !== 'black') {
+        element.style.color = 'black';
+      }
+    }
   }
 
   render() {
