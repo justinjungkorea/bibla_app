@@ -1,10 +1,14 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 body {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+
   margin: 0;
   padding: 0;
-  font-family: 'Noto Sans KR';
-  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

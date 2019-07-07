@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import bible from "./ko_ko.json";
 import bible2 from "./ko_ko_GAE.json";
-import {CopyToClipboad} from 'react-copy-to-clipboard';
 import "./App.css";
 
 class App extends Component {
@@ -217,13 +216,13 @@ class App extends Component {
     if(this.state.verseData.length === 1){
       items = this.state.verseData.map(tempV => {
         var index = Number(tempV.verseNum) * 1000;
-        return (<p key={index} id={index} style={{ color: 'black'}} onClick={() => {this._selectVerses(index)}}>{tempV.verse}</p>);
+        return (<p key={index} id={index} style={{ color: 'black', fontWeight: 400}} onClick={() => {this._selectVerses(index)}}>{tempV.verse}</p>);
       })
     }
     else{
       items = this.state.verseData.map(tempV => {
         var index = Number(tempV.verseNum) * 1000;
-        return (<p key={index} id={index} style={{ color: 'black'}} onClick={() => { this._selectVerses(index) }}>{Number(tempV.verseNum)}.{tempV.verse}</p>);
+        return (<p key={index} id={index} style={{ color: 'black', fontWeight: 400}} onClick={() => { this._selectVerses(index) }}>{Number(tempV.verseNum)}.{tempV.verse}</p>);
     });
     }
     
@@ -234,8 +233,10 @@ class App extends Component {
     var selectedVerse = document.getElementById(verseNumber);
     if (selectedVerse.style.color === 'black'){
       selectedVerse.style.color = '#003399';
+      selectedVerse.style.fontWeight = 500;
     } else {
       selectedVerse.style.color = 'black';
+      selectedVerse.style.fontWeight = 400;
     }
   }
 
@@ -282,6 +283,7 @@ class App extends Component {
       var element = document.getElementById(i * 1000);
       if (element.style.color !== 'black') {
         element.style.color = 'black';
+        element.style.fontWeight = 400;
       }
     }
   }
