@@ -229,6 +229,7 @@ class App extends Component {
     return items;
   };
 
+  //구절 선택시 폰트 변경
   _selectVerses = (verseNumber) => {
     var selectedVerse = document.getElementById(verseNumber);
     if (selectedVerse.style.color === 'black'){
@@ -240,6 +241,7 @@ class App extends Component {
     }
   }
 
+  //선택한 구절 클립보드에 복사
   _selectedCopy = () => {
     var str = "";
     for(var i=Number(this.state.verseS);i<=Number(this.state.verseE);++i){
@@ -259,7 +261,7 @@ class App extends Component {
     range.selectNode(el);
     window.getSelection().addRange(range);
     document.execCommand('copy');
-    alert("클립보드에 복사 되었습니다!");
+    alert("클립보드에 복사 완료!");
   }
   
 
@@ -272,7 +274,7 @@ class App extends Component {
     selection.removeAllRanges();
     selection.addRange(range);
     document.execCommand("Copy");
-    alert("클립보드에 복사 되었습니다!");
+    alert("클립보드에 복사 완료!");
   };
 
   _clearInput = () =>{
