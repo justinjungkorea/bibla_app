@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f68221b407501804beec62ea0e827c2d",
+    "revision": "5d8b0fd54bdb182e524eb5476836a255",
     "url": "/bibla_app/index.html"
   },
   {
-    "revision": "329f1f5153e28d174732",
-    "url": "/bibla_app/static/css/main.8eaf93d8.chunk.css"
+    "revision": "994debc0e7825dd8e9f1",
+    "url": "/bibla_app/static/css/main.7a8a9236.chunk.css"
   },
   {
     "revision": "4397df28c6e3a1ae81bd",
     "url": "/bibla_app/static/js/2.8eeeab82.chunk.js"
   },
   {
-    "revision": "329f1f5153e28d174732",
+    "revision": "994debc0e7825dd8e9f1",
     "url": "/bibla_app/static/js/main.4f13d9dd.chunk.js"
   },
   {
