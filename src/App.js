@@ -222,7 +222,7 @@ class App extends Component {
     else{
       items = this.state.verseData.map(tempV => {
         var index = Number(tempV.verseNum) * 1000;
-        return (<p key={index} id={index} style={{ color: 'black', fontWeight: 400}} onClick={() => { this._selectVerses(index) }}>{Number(tempV.verseNum)}.{tempV.verse}</p>);
+        return (<p key={index} id={index} style={{ color: 'black', fontWeight: 400}} onClick={() => { this._selectVerses(index) }}>{Number(tempV.verseNum)}. {tempV.verse}</p>);
     });
     }
     
