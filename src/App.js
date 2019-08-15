@@ -260,7 +260,7 @@ class App extends Component {
     var range = document.createRange();
     range.selectNode(el);
     window.getSelection().addRange(range);
-    document.execCommand('copy');
+    document.execCommand("Copy");
     alert("클립보드에 복사 완료!");
   }
   
