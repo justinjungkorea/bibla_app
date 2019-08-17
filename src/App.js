@@ -258,7 +258,7 @@ class App extends Component {
     document.body.appendChild(el);
     window.getSelection().removeAllRanges();
     var range = document.createRange();
-    range.selectNodeContents(el);
+    range.selectNode(el);
     window.getSelection().addRange(range);
     document.execCommand("Copy");
     alert("클립보드에 복사 완료!");
