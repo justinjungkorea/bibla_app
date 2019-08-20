@@ -239,6 +239,7 @@ class App extends Component {
       selectedVerse.style.color = 'black';
       selectedVerse.style.fontWeight = 400;
     }
+    this._selectedCopy();
   }
 
   //선택한 구절 클립보드에 복사
@@ -261,7 +262,6 @@ class App extends Component {
     range.selectNode(el);
     window.getSelection().addRange(range);
     document.execCommand("Copy");
-    alert("클립보드에 복사 완료!");
   }
   
 
@@ -308,7 +308,6 @@ class App extends Component {
         {this.state.view ? 
           <div>
           <button id="copy" onClick={this._copyData}>전체복사</button>
-          <button id="partedCopy" onClick={this._selectedCopy}>선택복사</button>
           <button id="clear" onClick={this._clearInput}>초기화</button>
           </div> 
         : null}
