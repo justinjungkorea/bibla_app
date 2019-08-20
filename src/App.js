@@ -291,7 +291,8 @@ class App extends Component {
   }
 
   render() {
-    return <div className="AppDisplay" align="center">
+    return (
+      <div className="AppDisplay" align="center">
         <button id="ot" onClick={this._loadingOT}>
           구약
         </button>
@@ -301,28 +302,44 @@ class App extends Component {
         <div className="books">
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
-          {this.state.book !== 0 ? <p id="lastinfo" align="left">
-                해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력<br />예) 창세기 경우 50장 이므로 50보다 큰 수 입력시 50장이 입력됨.
-              </p> : null}
+          {this.state.book !== 0 ? (
+            <p id="lastinfo" align="left">
+              해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력
+              <br />
+              예) 창세기 경우 50장 이므로 50보다 큰 수(51, 99...) 입력시
+              50장이 입력됨.
+              <br />원하는 구절 선택시 클립보드에 복사됨.
+            </p>
+          ) : null}
         </div>
-        {this.state.view ? 
+        {this.state.view ? (
           <div>
-          <button id="copy" onClick={this._copyData}>전체복사</button>
-          <button id="clear" onClick={this._clearInput}>초기화</button>
-          </div> 
-        : null}
-      <br />
+            <button id="copy" onClick={this._copyData}>
+              전체복사
+            </button>
+            <button id="clear" onClick={this._clearInput}>
+              초기화
+            </button>
+          </div>
+        ) : null}
+        <br />
         <div className="verseDisplay" align="left">
           {this._words()}
-          {this.state.view && this.state.verseS !== this.state.verseE ? <p id="info">
-                {this.state.bookName} {this.state.chapter}:{this.state.verseS}
-                ~{this.state.verseE} KRV
-              </p> : null}
-          {this.state.view && this.state.verseS === this.state.verseE ? <p id="info">
-                {this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV
-              </p> : null}
+          {this.state.view && this.state.verseS !== this.state.verseE ? (
+            <p id="info">
+              {this.state.bookName} {this.state.chapter}:{this.state.verseS}
+              ~{this.state.verseE} KRV
+            </p>
+          ) : null}
+          {this.state.view && this.state.verseS === this.state.verseE ? (
+            <p id="info">
+              {this.state.bookName} {this.state.chapter}:{this.state.verseS}{" "}
+              KRV
+            </p>
+          ) : null}
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
