@@ -37,7 +37,7 @@ class App extends Component {
     }
     this.setState({
       data: temp,
-      data2:temp2,
+      data2: temp2,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -58,7 +58,7 @@ class App extends Component {
     }
     this.setState({
       data: temp,
-      data2:temp2,
+      data2: temp2,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -77,25 +77,29 @@ class App extends Component {
       n = n - 1;
     }
 
-    if(this.state.view){
+    if (this.state.view) {
       this._clearInput();
     }
     this.setState({
       book: event.target.id,
       bookName: this.state.data[n].book_name,
-      bookData:this.state.data[n],
-      bookData2:this.state.data2[n],
-      view:false,
-      verseData:[]
+      bookData: this.state.data[n],
+      bookData2: this.state.data2[n],
+      view: false,
+      verseData: []
     });
   };
 
   //구약, 신약 선택 후 각 성경 리스트 버튼으로 리턴
   _displayData = () => {
-    
     const items = this.state.data.map(data => {
       return (
-        <button className="book" id={data.book_nr} key={data.book_nr} onClick={this._selectBook}>
+        <button
+          className="book"
+          id={data.book_nr}
+          key={data.book_nr}
+          onClick={this._selectBook}
+        >
           {data.book_name}
         </button>
       );
@@ -105,36 +109,63 @@ class App extends Component {
 
   //성경을 선택하면 장, 절 입력 화면 출력
   _chapterVerse = () => {
-    return <div>
-      <span id="bookinfo">{this.state.bookName}</span><br />
-      <form onSubmit={this._result}>
-        <label>
-          <input type="number" pattern="\d*" name="chapterNum" id="chapterNum" required="required" content="user-scalable=no" />장
-        </label>
-        <label>
-          <input type="number" pattern="\d*" name="verseStart" id="verseStart" content="user-scalable=no" />절~
-        </label>
-        <label>
-          <input type="number" pattern="\d*" name="verseEnd" id="verseEnd" content="user-scalable=no" />절
-        </label>
-        <select name="version" id="version">
-          <option value="han" defaultValue>개역한글</option>
-          <option value="gae" >개역개정</option>
-        </select>
-        <input type="submit" value="보기" />
-      </form>
-    </div>;
+    return (
+      <div>
+        <span id="bookinfo">{this.state.bookName}</span>
+        <br />
+        <form onSubmit={this._result} id="inputForm">
+          <label>
+            <input
+              type="number"
+              pattern="\d*"
+              name="chapterNum"
+              id="chapterNum"
+              required="required"
+              content="user-scalable=no"
+            />
+            장
+          </label>
+          <label>
+            <input
+              type="number"
+              pattern="\d*"
+              name="verseStart"
+              id="verseStart"
+              content="user-scalable=no"
+            />
+            절~
+          </label>
+          <label>
+            <input
+              type="number"
+              pattern="\d*"
+              name="verseEnd"
+              id="verseEnd"
+              content="user-scalable=no"
+            />
+            절
+          </label>
+          <select name="version" id="version">
+            <option value="han" defaultValue>
+              개역한글
+            </option>
+            <option value="gae">개역개정</option>
+          </select>
+          <input type="submit" id="viewSubmit" value="보기" />
+        </form>
+      </div>
+    );
   };
 
-  //입력 후 결과 화면 출력 
-  _result = (event) => {
+  //입력 후 결과 화면 출력
+  _result = event => {
     event.preventDefault();
     let ddata;
-    
+
     //입력 form에서 입력 데이터 가져오기
     let formData = new FormData(event.target);
 
-    if(formData.get("version") === "han"){
+    if (formData.get("version") === "han") {
       ddata = this.state.bookData;
     } else {
       ddata = this.state.bookData2;
@@ -146,30 +177,37 @@ class App extends Component {
     let venum = Number(formData.get("verseEnd"));
 
     //절을 입력하지 않았을 시 장 전체 출력
-    if (Number(formData.get("verseStart"))===0 && Number(formData.get("verseEnd"))===0) {
-        vsnum = 1;
-        document.getElementById("verseStart").value = 1;
-        venum = 999;
-    } 
+    if (
+      Number(formData.get("verseStart")) === 0 &&
+      Number(formData.get("verseEnd")) === 0
+    ) {
+      vsnum = 1;
+      document.getElementById("verseStart").value = 1;
+      venum = 999;
+    }
     //시작 절 부분만 입력시 해당 구절만 출력
-    else if (Number(formData.get("verseStart") > 0 && Number(formData.get("verseEnd")) === 0)) {
-        venum = vsnum;
-        document.getElementById("verseEnd").value = vsnum;
+    else if (
+      Number(
+        formData.get("verseStart") > 0 && Number(formData.get("verseEnd")) === 0
+      )
+    ) {
+      venum = vsnum;
+      document.getElementById("verseEnd").value = vsnum;
     }
 
     //입력이 올바르지 않을시 alert출력 및 값 재설정
-    if (cnum < 0 ) {
+    if (cnum < 0) {
       alert("올바르지 않은 입력입니다.");
       return;
     }
-    
+
     //입력한 성경이 몇 장으로 이루어져있는지 정보 가져오기
     let maxChapter = Number(ddata.book.length);
     //입력한 장이 해당 성경의 장수보다 높으면 마지막 장을 출력하도록 갱신
-     if (cnum > maxChapter) {
-       cnum = maxChapter;
-       document.getElementById("chapterNum").value = maxChapter;
-     }
+    if (cnum > maxChapter) {
+      cnum = maxChapter;
+      document.getElementById("chapterNum").value = maxChapter;
+    }
 
     //입력한 장이 몇 절로 이루어졌는지 정보 가져오기
     //let maxVerse = Number(Object.keys(ddata.book[cnum-1]).length);
@@ -177,7 +215,7 @@ class App extends Component {
     const ar = obj[0];
     let maxVerse = Number(Object.keys(ar).length);
     //입력이 올바르지 않을시 alert출력 및 값 재설정
-    if (vsnum <= 0 || vsnum > venum ) {
+    if (vsnum <= 0 || vsnum > venum) {
       alert("올바르지 않은 입력입니다.");
       return;
     }
@@ -189,13 +227,13 @@ class App extends Component {
       venum = maxVerse;
       document.getElementById("verseEnd").value = maxVerse;
     }
-    if(vsnum > maxVerse){
+    if (vsnum > maxVerse) {
       vsnum = maxVerse;
       document.getElementById("verseStart").value = maxVerse;
     }
     let i = vsnum;
     while (i <= venum) {
-      loaded.push({"verseNum": i, "verse":Object.values(ar)[i-1]});
+      loaded.push({ verseNum: i, verse: Object.values(ar)[i - 1] });
       i++;
     }
 
@@ -207,54 +245,78 @@ class App extends Component {
       verseData: loaded,
       view: true
     });
-
   };
 
   //state에 있는 data를 div tag에 리턴
   _words = () => {
     let items = null;
-    if(this.state.verseData.length === 1){
+    if (this.state.verseData.length === 1) {
       items = this.state.verseData.map(tempV => {
         var index = Number(tempV.verseNum) * 1000;
-        return (<p key={index} id={index} style={{ color: 'black', fontWeight: 400}} onClick={() => {this._selectVerses(index)}}>{tempV.verse}</p>);
-      })
-    }
-    else{
+        return (
+          <p
+            key={index}
+            id={index}
+            style={{ color: "black", fontWeight: 400 }}
+            onClick={() => {
+              this._selectVerses(index);
+            }}
+          >
+            {tempV.verse}
+          </p>
+        );
+      });
+    } else {
       items = this.state.verseData.map(tempV => {
         var index = Number(tempV.verseNum) * 1000;
-        return (<p key={index} id={index} style={{ color: 'black', fontWeight: 400}} onClick={() => { this._selectVerses(index) }}>{Number(tempV.verseNum)}. {tempV.verse}</p>);
-    });
+        return (
+          <p
+            key={index}
+            id={index}
+            style={{ color: "black", fontWeight: 400 }}
+            onClick={() => {
+              this._selectVerses(index);
+            }}
+          >
+            {Number(tempV.verseNum)}. {tempV.verse}
+          </p>
+        );
+      });
     }
-    
+
     return items;
   };
 
   //구절 선택시 폰트 변경
-  _selectVerses = (verseNumber) => {
+  _selectVerses = verseNumber => {
     var selectedVerse = document.getElementById(verseNumber);
-    if (selectedVerse.style.color === 'black'){
-      selectedVerse.style.color = '#003399';
+    if (selectedVerse.style.color === "black") {
+      selectedVerse.style.color = "#003399";
       selectedVerse.style.fontWeight = 500;
     } else {
-      selectedVerse.style.color = 'black';
+      selectedVerse.style.color = "black";
       selectedVerse.style.fontWeight = 400;
     }
     this._selectedCopy();
-  }
+  };
 
   //선택한 구절 클립보드에 복사
   _selectedCopy = () => {
     var str = "";
-    for(var i=Number(this.state.verseS);i<=Number(this.state.verseE);++i){
-      var element = document.getElementById(i*1000);
-      if(element.style.color !== 'black'){
+    for (
+      var i = Number(this.state.verseS);
+      i <= Number(this.state.verseE);
+      ++i
+    ) {
+      var element = document.getElementById(i * 1000);
+      if (element.style.color !== "black") {
         str = str + String(element.textContent) + "\n";
       }
     }
     str = str + (this.state.bookName + " " + this.state.chapter + "장 KRV");
-    var el = document.createElement('textarea');
+    var el = document.createElement("textarea");
     el.innerHTML = str;
-    el.style.pointerEvents = 'none';
+    el.style.pointerEvents = "none";
     el.style.opacity = 0;
     document.body.appendChild(el);
     window.getSelection().removeAllRanges();
@@ -262,8 +324,25 @@ class App extends Component {
     range.selectNode(el);
     window.getSelection().addRange(range);
     document.execCommand("Copy");
-  }
-  
+  };
+
+  _prevChapter = () => {
+    let chNum = document.getElementById("chapterNum").value;
+    if(chNum > 1){
+      document.getElementById("chapterNum").value = Number(chNum-1);
+      document.getElementById("verseStart").value = null;
+      document.getElementById("verseEnd").value = null;
+      document.getElementById("viewSubmit").click();
+    }
+  };
+
+  _nextChapter = () => {
+    let chNum = document.getElementById("chapterNum").value;
+    document.getElementById("chapterNum").value = Number(chNum + 1);
+    document.getElementById("verseStart").value = null;
+    document.getElementById("verseEnd").value = null;
+    document.getElementById("viewSubmit").click();
+  };
 
   //출력된 구절 클립보드에 복사하기
   _copyData = () => {
@@ -277,18 +356,22 @@ class App extends Component {
     alert("클립보드에 복사 완료!");
   };
 
-  _clearInput = () =>{
+  _clearInput = () => {
     document.getElementById("chapterNum").value = null;
     document.getElementById("verseStart").value = null;
     document.getElementById("verseEnd").value = null;
-    for (var i = Number(this.state.verseS); i <= Number(this.state.verseE); ++i) {
+    for (
+      var i = Number(this.state.verseS);
+      i <= Number(this.state.verseE);
+      ++i
+    ) {
       var element = document.getElementById(i * 1000);
-      if (element.style.color !== 'black') {
-        element.style.color = 'black';
+      if (element.style.color !== "black") {
+        element.style.color = "black";
         element.style.fontWeight = 400;
       }
     }
-  }
+  };
 
   render() {
     return (
@@ -306,9 +389,10 @@ class App extends Component {
             <p id="lastinfo" align="left">
               해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력
               <br />
-              예) 창세기 경우 50장 이므로 50보다 큰 수(51, 99...) 입력시
-              50장이 입력됨.
-              <br />원하는 구절 선택시 클립보드에 복사됨.
+              예) 창세기 경우 50장 이므로 50보다 큰 수(51, 99...) 입력시 50장이
+              입력됨.
+              <br />
+              원하는 구절 선택시 클립보드에 복사됨.
             </p>
           ) : null}
         </div>
@@ -316,6 +400,12 @@ class App extends Component {
           <div>
             <button id="copy" onClick={this._copyData}>
               전체복사
+            </button>
+            <button id="prev" onClick={this._prevChapter}>
+              이전장
+            </button>
+            <button id="next" onClick={this._nextChapter}>
+              다음장
             </button>
             <button id="clear" onClick={this._clearInput}>
               초기화
@@ -327,14 +417,13 @@ class App extends Component {
           {this._words()}
           {this.state.view && this.state.verseS !== this.state.verseE ? (
             <p id="info">
-              {this.state.bookName} {this.state.chapter}:{this.state.verseS}
-              ~{this.state.verseE} KRV
+              {this.state.bookName} {this.state.chapter}:{this.state.verseS}~
+              {this.state.verseE} KRV
             </p>
           ) : null}
           {this.state.view && this.state.verseS === this.state.verseE ? (
             <p id="info">
-              {this.state.bookName} {this.state.chapter}:{this.state.verseS}{" "}
-              KRV
+              {this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV
             </p>
           ) : null}
         </div>
