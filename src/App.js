@@ -176,6 +176,7 @@ class App extends Component {
     let vsnum = Number(formData.get("verseStart"));
     let venum = Number(formData.get("verseEnd"));
 
+
     //절을 입력하지 않았을 시 장 전체 출력
     if (
       Number(formData.get("verseStart")) === 0 &&
@@ -184,13 +185,12 @@ class App extends Component {
       vsnum = 1;
       document.getElementById("verseStart").value = 1;
       venum = 999;
-    }
-    //시작 절 부분만 입력시 해당 구절만 출력
-    else if (
+    } else if (
       Number(
         formData.get("verseStart") > 0 && Number(formData.get("verseEnd")) === 0
       )
     ) {
+      //시작 절 부분만 입력시 해당 구절만 출력
       venum = vsnum;
       document.getElementById("verseEnd").value = vsnum;
     }
@@ -210,10 +210,10 @@ class App extends Component {
     }
 
     //입력한 장이 몇 절로 이루어졌는지 정보 가져오기
-    //let maxVerse = Number(Object.keys(ddata.book[cnum-1]).length);
     const obj = Object.values(ddata.book[cnum - 1]);
     const ar = obj[0];
     let maxVerse = Number(Object.keys(ar).length);
+
     //입력이 올바르지 않을시 alert출력 및 값 재설정
     if (vsnum <= 0 || vsnum > venum) {
       alert("올바르지 않은 입력입니다.");
@@ -231,8 +231,14 @@ class App extends Component {
       vsnum = maxVerse;
       document.getElementById("verseStart").value = maxVerse;
     }
+
     let i = vsnum;
     while (i <= venum) {
+      var element = document.getElementById(i * 1000);
+      if (element !== null) {
+        element.style.color = "black";
+        element.style.fontWeight = 400;
+      }
       loaded.push({ verseNum: i, verse: Object.values(ar)[i - 1] });
       i++;
     }
@@ -328,8 +334,8 @@ class App extends Component {
 
   _prevChapter = () => {
     let chNum = document.getElementById("chapterNum").value;
-    if(chNum > 1){
-      document.getElementById("chapterNum").value = Number(chNum)-1;
+    if (chNum > 1) {
+      document.getElementById("chapterNum").value = Number(chNum) - 1;
       document.getElementById("verseStart").value = null;
       document.getElementById("verseEnd").value = null;
       document.getElementById("viewSubmit").click();
@@ -338,7 +344,7 @@ class App extends Component {
 
   _nextChapter = () => {
     let chNum = document.getElementById("chapterNum").value;
-    document.getElementById("chapterNum").value = Number(chNum)+1;
+    document.getElementById("chapterNum").value = Number(chNum) + 1;
     document.getElementById("verseStart").value = null;
     document.getElementById("verseEnd").value = null;
     document.getElementById("viewSubmit").click();
@@ -360,11 +366,7 @@ class App extends Component {
     document.getElementById("chapterNum").value = null;
     document.getElementById("verseStart").value = null;
     document.getElementById("verseEnd").value = null;
-    for (
-      var i = Number(this.state.verseS);
-      i <= Number(this.state.verseE);
-      ++i
-    ) {
+    for (var i = Number(this.state.verseS); i <= Number(this.state.verseE); ++i) {
       var element = document.getElementById(i * 1000);
       if (element.style.color !== "black") {
         element.style.color = "black";
