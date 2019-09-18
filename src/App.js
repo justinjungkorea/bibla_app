@@ -120,7 +120,6 @@ class App extends Component {
               pattern="\d*"
               name="chapterNum"
               id="chapterNum"
-              required="required"
               content="user-scalable=no"
             />
             장
@@ -176,7 +175,10 @@ class App extends Component {
     let vsnum = Number(formData.get("verseStart"));
     let venum = Number(formData.get("verseEnd"));
 
-
+    if(cnum === 0){
+      cnum = 1;
+      document.getElementById("chapterNum").value = 1;
+    }
     //절을 입력하지 않았을 시 장 전체 출력
     if (
       Number(formData.get("verseStart")) === 0 &&
@@ -330,6 +332,13 @@ class App extends Component {
     range.selectNode(el);
     window.getSelection().addRange(range);
     document.execCommand("Copy");
+  };
+
+  _firstChapter = () => {
+    document.getElementById("chapterNum").value = 1;
+    document.getElementById("verseStart").value = null;
+    document.getElementById("verseEnd").value = null;
+    document.getElementById("viewSubmit").click();
   };
 
   _prevChapter = () => {
