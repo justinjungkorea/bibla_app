@@ -309,7 +309,7 @@ class App extends Component {
   };
 
   //선택한 구절 클립보드에 복사
-  _selectedCopy = () => {
+  _selectedCopy = async () => {
     var str = "";
     for (
       var i = Number(this.state.verseS);
@@ -322,16 +322,8 @@ class App extends Component {
       }
     }
     str = str + (this.state.bookName + " " + this.state.chapter + "장 KRV");
-    var el = document.createElement("textarea");
-    el.innerHTML = str;
-    el.style.pointerEvents = "none";
-    el.style.opacity = 0;
-    document.body.appendChild(el);
-    window.getSelection().removeAllRanges();
-    var range = document.createRange();
-    range.selectNode(el);
-    window.getSelection().addRange(range);
-    document.execCommand("Copy");
+    await navigator.clipboard.writeText(str);
+
   };
 
   _firstChapter = () => {
