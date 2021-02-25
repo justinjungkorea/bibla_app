@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import bible from "./ko_ko.json";
 import bible2 from "./ko_ko_GAE.json";
+import bible3 from "./kjv_ko.json";
 import "./App.css";
 
 class App extends Component {
   state = {
     data: [],
     data2: [],
+    data3: [],
     book: 0,
     chapter: 0,
     verseS: 0,
@@ -14,6 +16,7 @@ class App extends Component {
     view: false,
     bookData: [],
     bookData2: [],
+    bookData3: [],
     verseData: [],
     selection: []
   };
@@ -31,9 +34,11 @@ class App extends Component {
   _loadingOT = async () => {
     let temp = [];
     let temp2 = [];
+    let temp3 = [];
     for (let i = 0; i < 39; ++i) {
       temp.push(bible[i]);
       temp2.push(bible2[i]);
+      temp3.push(bible3[i]);
     }
     this.setState({
       data: temp,
@@ -52,13 +57,16 @@ class App extends Component {
   _loagingNT = async () => {
     let temp = [];
     let temp2 = [];
+    let temp3 = [];
     for (let i = 39; i < 66; ++i) {
       temp.push(bible[i]);
       temp2.push(bible2[i]);
+      temp3.push(bible3[i]);
     }
     this.setState({
       data: temp,
       data2: temp2,
+      data3: temp3,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -85,6 +93,7 @@ class App extends Component {
       bookName: this.state.data[n].book_name,
       bookData: this.state.data[n],
       bookData2: this.state.data2[n],
+      bookData3: this.state.data3[n],
       view: false,
       verseData: []
     });
@@ -149,6 +158,7 @@ class App extends Component {
               개역한글
             </option>
             <option value="gae">개역개정</option>
+            <option value="kjv">흠정역</option>
           </select>
           <input type="submit" id="viewSubmit" value="보기" />
         </form>
@@ -166,8 +176,10 @@ class App extends Component {
 
     if (formData.get("version") === "han") {
       ddata = this.state.bookData;
-    } else {
+    } else if(formData.get("version") === "gae"){
       ddata = this.state.bookData2;
+    } else {
+      ddata = this.state.bookData3;
     }
 
     //입력화면에 있는 장, 시작 절, 끝 절 값 가져오기
