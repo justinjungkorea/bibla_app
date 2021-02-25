@@ -400,16 +400,16 @@ class App extends Component {
         <div className="books">
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
-          {this.state.book !== 0 ? (
-            <p id="lastinfo" align="left">
-              해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력
-              <br />
-              예) 창세기 경우 50장 이므로 50보다 큰 수(51, 99...) 입력시 50장이
-              입력됨.
-              <br />
-              원하는 구절 선택시 클립보드에 복사됨.
-            </p>
-          ) : null}
+          {/*{this.state.book !== 0 ? (*/}
+          {/*  <p id="lastinfo" align="left">*/}
+          {/*    해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력*/}
+          {/*    <br />*/}
+          {/*    예) 창세기 경우 50장 이므로 50보다 큰 수(51, 99...) 입력시 50장이*/}
+          {/*    입력됨.*/}
+          {/*    <br />*/}
+          {/*    원하는 구절 선택시 클립보드에 복사됨.*/}
+          {/*  </p>*/}
+          {/*) : null}*/}
         </div>
         {this.state.view ? (
           <div>
