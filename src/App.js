@@ -18,7 +18,8 @@ class App extends Component {
     bookData2: [],
     bookData3: [],
     verseData: [],
-    selection: []
+    selection: [],
+    version: ""
   };
 
   constructor() {
@@ -173,12 +174,15 @@ class App extends Component {
 
     //입력 form에서 입력 데이터 가져오기
     let formData = new FormData(event.target);
-
+    let version = "";
     if (formData.get("version") === "han") {
+      version = '개역한글';
       ddata = this.state.bookData;
     } else if(formData.get("version") === "gae"){
+      version = '개역개정';
       ddata = this.state.bookData2;
     } else {
+      version = '흠정역';
       ddata = this.state.bookData3;
     }
 
@@ -263,7 +267,8 @@ class App extends Component {
       verseS: vsnum,
       verseE: venum,
       verseData: loaded,
-      view: true
+      view: true,
+      version: version
     });
   };
 
@@ -333,7 +338,7 @@ class App extends Component {
         str = str + String(element.textContent) + "\n";
       }
     }
-    str = str + (this.state.bookName + " " + this.state.chapter + "장 KRV");
+    str = str + (this.state.bookName + " " + this.state.chapter + "장 " + this.state.version);
     await navigator.clipboard.writeText(str);
 
   };
@@ -432,12 +437,12 @@ class App extends Component {
           {this.state.view && this.state.verseS !== this.state.verseE ? (
             <p id="info">
               {this.state.bookName} {this.state.chapter}:{this.state.verseS}~
-              {this.state.verseE} KRV
+              {this.state.verseE} {this.state.version}
             </p>
           ) : null}
           {this.state.view && this.state.verseS === this.state.verseE ? (
             <p id="info">
-              {this.state.bookName} {this.state.chapter}:{this.state.verseS} KRV
+              {this.state.bookName} {this.state.chapter}:{this.state.verseS} {this.state.version}
             </p>
           ) : null}
           {this._words()}
