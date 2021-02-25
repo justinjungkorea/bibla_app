@@ -44,6 +44,7 @@ class App extends Component {
     this.setState({
       data: temp,
       data2: temp2,
+      data3: temp3,
       book: 0,
       chapter: 0,
       verseS: 0,
