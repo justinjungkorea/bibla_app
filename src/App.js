@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import bible from "./ko_ko.json";
 import bible2 from "./ko_ko_GAE.json";
 import bible3 from "./kjv_ko.json";
@@ -18,8 +18,10 @@ class App extends Component {
     bookData2: [],
     bookData3: [],
     verseData: [],
+    verseData2: [],
     selection: [],
-    version: ""
+    version: "",
+    version2: null
   };
 
   constructor() {
@@ -123,7 +125,7 @@ class App extends Component {
     return (
       <div>
         <span id="bookinfo">{this.state.bookName}</span>
-        <br />
+        <br/>
         <form onSubmit={this._result} id="inputForm">
           <label>
             <input
@@ -162,7 +164,17 @@ class App extends Component {
             <option value="gae">개역개정</option>
             <option value="kjv">흠정역</option>
           </select>
-          <input type="submit" id="viewSubmit" value="보기" />
+          <select name="version2" id="version2">
+            <option value="none" defaultValue>
+              대역
+            </option>
+            <option value="han">
+              개역한글
+            </option>
+            <option value="gae">개역개정</option>
+            <option value="kjv">흠정역</option>
+          </select>
+          <input type="submit" id="viewSubmit" value="보기"/>
         </form>
       </div>
     );
@@ -172,14 +184,17 @@ class App extends Component {
   _result = event => {
     event.preventDefault();
     let ddata;
+    let ddata2;
 
     //입력 form에서 입력 데이터 가져오기
     let formData = new FormData(event.target);
-    let version = "";
+    let version = null;
+    let version2 = null;
+
     if (formData.get("version") === "han") {
       version = '개역한글';
       ddata = this.state.bookData;
-    } else if(formData.get("version") === "gae"){
+    } else if (formData.get("version") === "gae") {
       version = '개역개정';
       ddata = this.state.bookData2;
     } else {
@@ -187,12 +202,29 @@ class App extends Component {
       ddata = this.state.bookData3;
     }
 
+    //대역 선택
+    if(formData.get("version") === formData.get("version2")){
+      alert('동일 역본 입니다.')
+    }
+    else if (formData.get("version2") === "han") {
+      version2 = '개역한글';
+      ddata2 = this.state.bookData;
+    } else if (formData.get("version2") === "gae") {
+      version2 = '개역개정';
+      ddata2 = this.state.bookData2;
+    } else if (formData.get("version2") === "kjv"){
+      version2 = '흠정역';
+      ddata2 = this.state.bookData3;
+    }
+
+
+
     //입력화면에 있는 장, 시작 절, 끝 절 값 가져오기
     let cnum = Number(formData.get("chapterNum"));
     let vsnum = Number(formData.get("verseStart"));
     let venum = Number(formData.get("verseEnd"));
 
-    if(cnum === 0){
+    if (cnum === 0) {
       cnum = 1;
       document.getElementById("chapterNum").value = 1;
     }
@@ -233,6 +265,12 @@ class App extends Component {
     const ar = obj[0];
     let maxVerse = Number(Object.keys(ar).length);
 
+    let obj2, ar2;
+    if(version2){
+      obj2 = Object.values(ddata2.book[cnum - 1]);
+      ar2 = obj2[0];
+    }
+
     //입력이 올바르지 않을시 alert출력 및 값 재설정
     if (vsnum <= 0 || vsnum > venum) {
       alert("올바르지 않은 입력입니다.");
@@ -258,7 +296,14 @@ class App extends Component {
         element.style.color = "black";
         element.style.fontWeight = 400;
       }
-      loaded.push({ verseNum: i, verse: Object.values(ar)[i - 1] });
+
+      if(version2){
+        loaded.push({verseNum: i, verse: Object.values(ar)[i - 1], verse_2: Object.values(ar2)[i - 1]});
+      } else {
+        loaded.push({verseNum: i, verse: Object.values(ar)[i - 1]});
+      }
+
+
       i++;
     }
 
@@ -269,7 +314,8 @@ class App extends Component {
       verseE: venum,
       verseData: loaded,
       view: true,
-      version: version
+      version: version,
+      version2: version2
     });
   };
 
@@ -283,15 +329,15 @@ class App extends Component {
           <p
             key={index}
             id={index}
-            style={{ color: "black", fontWeight: 400 }}
+            style={{color: "black", fontWeight: 400}}
             onClick={() => {
               this._selectVerses(index);
             }}
           >
             {tempV.verse}
           </p>
-        );
-      });
+        )
+      })
     } else {
       items = this.state.verseData.map(tempV => {
         var index = Number(tempV.verseNum) * 1000;
@@ -304,7 +350,8 @@ class App extends Component {
               this._selectVerses(index);
             }}
           >
-            {Number(tempV.verseNum)}. {tempV.verse}
+            {Number(tempV.verseNum) + ". " + tempV.verse}<br/>
+            {tempV.verse_2 ? (Number(tempV.verseNum) + ". " + tempV.verse_2) : ''}
           </p>
         );
       });
@@ -336,7 +383,7 @@ class App extends Component {
     ) {
       var element = document.getElementById(i * 1000);
       if (element.style.color !== "black") {
-        str = str + String(element.textContent) + "\n";
+        str = str + String(element.childNodes[0].textContent) + '\n';
       }
     }
     str = str + (this.state.bookName + " " + this.state.chapter + "장 " + this.state.version);
@@ -344,6 +391,7 @@ class App extends Component {
 
   };
 
+  //1장으로 돌아가기
   _firstChapter = () => {
     document.getElementById("chapterNum").value = 1;
     document.getElementById("verseStart").value = null;
@@ -351,6 +399,7 @@ class App extends Component {
     document.getElementById("viewSubmit").click();
   };
 
+  //이전 장으로 이동
   _prevChapter = () => {
     let chNum = document.getElementById("chapterNum").value;
     if (chNum > 1) {
@@ -361,6 +410,7 @@ class App extends Component {
     }
   };
 
+  //다음 장으로 이동
   _nextChapter = () => {
     let chNum = document.getElementById("chapterNum").value;
     document.getElementById("chapterNum").value = Number(chNum) + 1;
@@ -433,7 +483,7 @@ class App extends Component {
             </button>
           </div>
         ) : null}
-        <br />
+        <br/>
         <div className="verseDisplay" align="left">
           {this.state.view && this.state.verseS !== this.state.verseE ? (
             <p id="info">
