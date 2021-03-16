@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import bible from "./ko_ko.json";
 import bible2 from "./ko_ko_GAE.json";
 import bible3 from "./kjv_ko.json";
+import bible4 from "./kjv.json";
 import "./App.css";
 
 class App extends Component {
@@ -9,6 +10,7 @@ class App extends Component {
     data: [],
     data2: [],
     data3: [],
+    data4: [],
     book: 0,
     chapter: 0,
     verseS: 0,
@@ -17,6 +19,7 @@ class App extends Component {
     bookData: [],
     bookData2: [],
     bookData3: [],
+    bookData4: [],
     verseData: [],
     verseData2: [],
     selection: [],
@@ -38,15 +41,18 @@ class App extends Component {
     let temp = [];
     let temp2 = [];
     let temp3 = [];
+    let temp4 = [];
     for (let i = 0; i < 39; ++i) {
       temp.push(bible[i]);
       temp2.push(bible2[i]);
       temp3.push(bible3[i]);
+      temp4.push(bible4[i]);
     }
     this.setState({
       data: temp,
       data2: temp2,
       data3: temp3,
+      data4: temp4,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -62,15 +68,18 @@ class App extends Component {
     let temp = [];
     let temp2 = [];
     let temp3 = [];
+    let temp4 = [];
     for (let i = 39; i < 66; ++i) {
       temp.push(bible[i]);
       temp2.push(bible2[i]);
       temp3.push(bible3[i]);
+      temp4.push(bible4[i]);
     }
     this.setState({
       data: temp,
       data2: temp2,
       data3: temp3,
+      data4: temp4,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -98,6 +107,7 @@ class App extends Component {
       bookData: this.state.data[n],
       bookData2: this.state.data2[n],
       bookData3: this.state.data3[n],
+      bookData4: this.state.data4[n],
       view: false,
       verseData: []
     });
@@ -162,7 +172,8 @@ class App extends Component {
               개역한글
             </option>
             <option value="gae">개역개정</option>
-            <option value="kjv">흠정역</option>
+            <option value="kjv_ko">흠정역</option>
+            <option value="kjv">KJV</option>
           </select>
           <select name="version2" id="version2">
             <option value="none" defaultValue>
@@ -172,7 +183,8 @@ class App extends Component {
               개역한글
             </option>
             <option value="gae">개역개정</option>
-            <option value="kjv">흠정역</option>
+            <option value="kjv_ko">흠정역</option>
+            <option value="kjv">KJV</option>
           </select>
           <input type="submit" id="viewSubmit" value="보기"/>
         </form>
@@ -197,9 +209,12 @@ class App extends Component {
     } else if (formData.get("version") === "gae") {
       version = '개역개정';
       ddata = this.state.bookData2;
-    } else {
+    } else if (formData.get("version") === "kjv_ko"){
       version = '흠정역';
       ddata = this.state.bookData3;
+    } else if (formData.get("version") === "kjv"){
+      version = 'KJV';
+      ddata = this.state.bookData4;
     }
 
     //대역 선택
@@ -212,9 +227,12 @@ class App extends Component {
     } else if (formData.get("version2") === "gae") {
       version2 = '개역개정';
       ddata2 = this.state.bookData2;
-    } else if (formData.get("version2") === "kjv"){
+    } else if (formData.get("version2") === "kjv_ko"){
       version2 = '흠정역';
       ddata2 = this.state.bookData3;
+    } else if (formData.get("version2") === "kjv"){
+      version2 = 'KJV';
+      ddata2 = this.state.bookData4;
     }
 
 
@@ -345,13 +363,12 @@ class App extends Component {
           <p
             key={index}
             id={index}
-            style={{ color: "black", fontWeight: 400 }}
+            style={{ color: "black", fontWeight: 400, whiteSpace: "pre-wrap" }}
             onClick={() => {
               this._selectVerses(index);
             }}
           >
-            {Number(tempV.verseNum) + ". " + tempV.verse}<br/>
-            {tempV.verse_2 ? (Number(tempV.verseNum) + ". " + tempV.verse_2) : ''}
+            {tempV.verse_2 ? (Number(tempV.verseNum) + ". " + tempV.verse + "\n" + Number(tempV.verseNum) + ". " + tempV.verse_2 + "\n\n") : (Number(tempV.verseNum) + ". " + tempV.verse)}
           </p>
         );
       });

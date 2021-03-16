@@ -1,5 +1,5 @@
 #ot,#nt {
-  background: #53c1ff;
+  background: #196b94;
   color: #fff;
   border: 1px solid #fff;
   border-radius: 5px;
@@ -20,9 +20,9 @@
 }
 
 .book {
-  background: #cff3b7;
-  color: rgb(0, 0, 0);
-  border: 1px solid #000000;
+  background: #53c1ff;
+  color: #fff;
+  border: 1px solid #fff;
   border-radius: 5px;
   cursor: pointer;
   font-size: 9pt;
@@ -129,7 +129,7 @@ select {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  
+
   background-repeat: no-repeat;
   background-size: 0.5em auto;
   background-position: right 0.25em center;
@@ -138,7 +138,7 @@ select {
   padding-top: .5em;
   padding-bottom: .5em;
   margin-left:2px;
-  
+
   background-image: url("data:image/svg+xml;charset=utf-8, \
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 40'> \
       <polygon points='0,0 60,0 30,40' style='fill:black;'/> \
