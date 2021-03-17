@@ -368,7 +368,8 @@ class App extends Component {
               this._selectVerses(index);
             }}
           >
-            {tempV.verse_2 ? (Number(tempV.verseNum) + ". " + tempV.verse + "\n" + Number(tempV.verseNum) + ". " + tempV.verse_2 + "\n\n") : (Number(tempV.verseNum) + ". " + tempV.verse)}
+            {Number(tempV.verseNum) + ". " + tempV.verse}<br/>
+            {tempV.verse_2 ? (Number(tempV.verseNum) + ". " + tempV.verse_2 + "\n\n") : ''}
           </p>
         );
       });
