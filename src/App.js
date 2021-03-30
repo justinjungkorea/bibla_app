@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import bible from "./ko_ko.json";
-import bible2 from "./ko_ko_GAE.json";
-import bible3 from "./kjv_ko.json";
-import bible4 from "./kjv.json";
+import bible2 from "./kjv_ko.json";
+import bible3 from "./kjv.json";
 import "./App.css";
 
 class App extends Component {
@@ -10,7 +9,6 @@ class App extends Component {
     data: [],
     data2: [],
     data3: [],
-    data4: [],
     book: 0,
     chapter: 0,
     verseS: 0,
@@ -19,7 +17,6 @@ class App extends Component {
     bookData: [],
     bookData2: [],
     bookData3: [],
-    bookData4: [],
     verseData: [],
     verseData2: [],
     selection: [],
@@ -41,18 +38,15 @@ class App extends Component {
     let temp = [];
     let temp2 = [];
     let temp3 = [];
-    let temp4 = [];
     for (let i = 0; i < 39; ++i) {
       temp.push(bible[i]);
       temp2.push(bible2[i]);
       temp3.push(bible3[i]);
-      temp4.push(bible4[i]);
     }
     this.setState({
       data: temp,
       data2: temp2,
       data3: temp3,
-      data4: temp4,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -68,18 +62,15 @@ class App extends Component {
     let temp = [];
     let temp2 = [];
     let temp3 = [];
-    let temp4 = [];
     for (let i = 39; i < 66; ++i) {
       temp.push(bible[i]);
       temp2.push(bible2[i]);
       temp3.push(bible3[i]);
-      temp4.push(bible4[i]);
     }
     this.setState({
       data: temp,
       data2: temp2,
       data3: temp3,
-      data4: temp4,
       book: 0,
       chapter: 0,
       verseS: 0,
@@ -107,7 +98,6 @@ class App extends Component {
       bookData: this.state.data[n],
       bookData2: this.state.data2[n],
       bookData3: this.state.data3[n],
-      bookData4: this.state.data4[n],
       view: false,
       verseData: []
     });
@@ -132,6 +122,7 @@ class App extends Component {
 
   //성경을 선택하면 장, 절 입력 화면 출력
   _chapterVerse = () => {
+
     return (
       <div>
         <span id="bookinfo">{this.state.bookName}</span>
@@ -168,21 +159,13 @@ class App extends Component {
             절
           </label>
           <select name="version" id="version">
-            <option value="han" defaultValue>
-              개역한글
-            </option>
-            <option value="gae">개역개정</option>
+            <option value="han" defaultValue>개역한글</option>
             <option value="kjv_ko">흠정역</option>
             <option value="kjv">KJV</option>
           </select>
           <select name="version2" id="version2">
-            <option value="none" defaultValue>
-              대역
-            </option>
-            <option value="han">
-              개역한글
-            </option>
-            <option value="gae">개역개정</option>
+            <option value="none" defaultValue>대역</option>
+            <option value="han">개역한글</option>
             <option value="kjv_ko">흠정역</option>
             <option value="kjv">KJV</option>
           </select>
@@ -206,15 +189,12 @@ class App extends Component {
     if (formData.get("version") === "han") {
       version = '개역한글';
       ddata = this.state.bookData;
-    } else if (formData.get("version") === "gae") {
-      version = '개역개정';
-      ddata = this.state.bookData2;
     } else if (formData.get("version") === "kjv_ko"){
       version = '흠정역';
-      ddata = this.state.bookData3;
+      ddata = this.state.bookData2;
     } else if (formData.get("version") === "kjv"){
       version = 'KJV';
-      ddata = this.state.bookData4;
+      ddata = this.state.bookData3;
     }
 
     //대역 선택
@@ -224,15 +204,12 @@ class App extends Component {
     else if (formData.get("version2") === "han") {
       version2 = '개역한글';
       ddata2 = this.state.bookData;
-    } else if (formData.get("version2") === "gae") {
-      version2 = '개역개정';
-      ddata2 = this.state.bookData2;
     } else if (formData.get("version2") === "kjv_ko"){
       version2 = '흠정역';
-      ddata2 = this.state.bookData3;
+      ddata2 = this.state.bookData2;
     } else if (formData.get("version2") === "kjv"){
       version2 = 'KJV';
-      ddata2 = this.state.bookData4;
+      ddata2 = this.state.bookData3;
     }
 
 
@@ -474,16 +451,6 @@ class App extends Component {
         <div className="books">
           {this.state.data.length !== 0 ? this._displayData() : null}
           {this.state.book !== 0 ? this._chapterVerse() : null}
-          {/*{this.state.book !== 0 ? (*/}
-          {/*  <p id="lastinfo" align="left">*/}
-          {/*    해당 장(절)보다 큰 수 입력시 마지막 장(절) 출력*/}
-          {/*    <br />*/}
-          {/*    예) 창세기 경우 50장 이므로 50보다 큰 수(51, 99...) 입력시 50장이*/}
-          {/*    입력됨.*/}
-          {/*    <br />*/}
-          {/*    원하는 구절 선택시 클립보드에 복사됨.*/}
-          {/*  </p>*/}
-          {/*) : null}*/}
         </div>
         {this.state.view ? (
           <div>
