@@ -122,7 +122,6 @@ class App extends Component {
 
   //성경을 선택하면 장, 절 입력 화면 출력
   _chapterVerse = () => {
-
     return (
       <div>
         <span id="bookinfo">{this.state.bookName}</span>
@@ -136,7 +135,7 @@ class App extends Component {
               id="chapterNum"
               content="user-scalable=no"
             />
-            장
+            {this.state.book === '19' ? '편' : '장'}
           </label>
           <label>
             <input
@@ -381,7 +380,7 @@ class App extends Component {
         str = str + String(element.childNodes[0].textContent) + '\n';
       }
     }
-    str = str + (this.state.bookName + " " + this.state.chapter + "장 " + this.state.version);
+    str = str + (this.state.bookName + " " + this.state.chapter + (this.state.book === '19'?'편':'장'));
     await navigator.clipboard.writeText(str);
 
   };
