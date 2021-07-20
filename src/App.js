@@ -158,8 +158,8 @@ class App extends Component {
             절
           </label>
           <select name="version" id="version">
-            <option value="han" defaultValue>개역한글</option>
-            <option value="kjv_ko">흠정역</option>
+            <option value="kjv_ko" defaultValue>흠정역</option>
+            <option value="han" >개역한글</option>
             <option value="kjv">KJV</option>
           </select>
           <select name="version2" id="version2">
