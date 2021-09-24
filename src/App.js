@@ -438,14 +438,22 @@ class App extends Component {
     }
   };
 
+  //오늘의 잠언
+  _proverb = () => {
+    window.location.href = 'https://justinjungkorea.github.io/proverbForToday'
+  }
+
   render() {
     return (
       <div className="AppDisplay" align="center">
-        <button id="ot" onClick={this._loadingOT}>
+        <button id="ot" className='infoBtn' onClick={this._loadingOT}>
           구약
         </button>
-        <button id="nt" onClick={this._loagingNT}>
+        <button id="nt" className='infoBtn' onClick={this._loagingNT}>
           신약
+        </button>
+        <button id="proverb" className='infoBtn' onClick={this._proverb}>
+          오늘의 잠언
         </button>
         <div className="books">
           {this.state.data.length !== 0 ? this._displayData() : null}

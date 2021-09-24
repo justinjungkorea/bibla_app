@@ -1,4 +1,4 @@
-#ot,#nt {
+.infoBtn {
   background: #196b94;
   color: #fff;
   border: 1px solid #fff;
@@ -11,7 +11,7 @@
   margin:10px;
 }
 
-#ot:hover,#nt:hover, #ot:active:focus, #nt:active {
+.infoBtn:hover, .infoBtn:active:focus {
   background: #016abc;
   color: #fff;
   border: 1px solid #eee;
