@@ -453,7 +453,7 @@ class App extends Component {
           신약
         </button>
         <button id="proverb" className='infoBtn' onClick={this._proverb}>
-          오늘의 잠언
+          잠언
         </button>
         <div className="books">
           {this.state.data.length !== 0 ? this._displayData() : null}
